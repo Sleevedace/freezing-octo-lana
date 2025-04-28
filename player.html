@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Player</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <style>
+    body {
+      margin: 0;
+      background: #fff;
+    }
+    .player-wrapper {
+      padding: 0.5rem;
+    }
+    #now-playing {
+      padding: 0.5rem;
+      background: #007acc;
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="now-playing">Now Playing: None</div>
+  <div class="player-wrapper">
+    <audio id="main-player" class="plyr" controls>
+      <source src="mixes/late-night-drive.mp3" type="audio/mp3">
+      Your browser does not support the audio tag.
+    </audio>
+  </div>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <script>
+    const player = new Plyr('#main-player');
+    window.addEventListener('message', function(event) {
+      if (event.data.type === 'changeTrack') {
+        const trackTitle = event.data.trackTitle;
+        const filePath = event.data.filePath;
+        document.getElementById('main-player').src = filePath;
+        player.source = {
+          type: 'audio',
+          sources: [{
+            src: filePath,
+            type: 'audio/mp3',
+          }],
+        };
+        document.getElementById('now-playing').innerText = `Now Playing: ${trackTitle}`;
+        player.play();
+      }
+    });
+  </script>
+</body>
+</html>

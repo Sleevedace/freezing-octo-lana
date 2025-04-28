@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mixes - [Your Name]</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a> |
+    <a href="mixes.html">Mixes</a> |
+    <a href="blog.html">Blog</a> |
+    <a href="projects.html">Projects</a>
+  </nav>
+  <main>
+    <h1>Mixes</h1>
+    <p>Explore a collection of my DJ sets spanning moods and genres.</p>
+    <section class="mix-grid">
+      <div class="mix-card" onclick="changeMix('mixes/late-night-drive.mp3', 'Late Night Drive')">
+        <h2>Late Night Drive</h2>
+        <p>Dreamy synths and mellow beats for night cruising.</p>
+        <audio class="plyr" controls>
+          <source src="mixes/late-night-drive.mp3" type="audio/mp3">
+          Your browser does not support the audio tag.
+        </audio>
+        <div class="tags">
+          <span>Chillwave</span>
+          <span>Synthwave</span>
+        </div>
+      </div>
+      <div class="mix-card" onclick="changeMix('mixes/sunset-vibes.mp3', 'Sunset Vibes')">
+        <h2>Sunset Vibes</h2>
+        <p>Uplifting house music for summer evenings.</p>
+        <audio class="plyr" controls>
+          <source src="mixes/sunset-vibes.mp3" type="audio/mp3">
+          Your browser does not support the audio tag.
+        </audio>
+        <div class="tags">
+          <span>House</span>
+          <span>Deep House</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <iframe id="sticky-player" src="player.html" frameborder="0"></iframe>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <script>
+    const players = Plyr.setup('.plyr');
+    function changeMix(filePath, trackTitle) {
+      const iframe = document.getElementById('sticky-player');
+      const iframeWindow = iframe.contentWindow;
+      iframeWindow.postMessage({ type: 'changeTrack', filePath: filePath, trackTitle: trackTitle }, '*');
+    }
+  </script>
+</body>
+</html>
